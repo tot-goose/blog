@@ -1,0 +1,62 @@
+name: Sync RSS & Generate Posts
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Запуск каждые 6 часов
+  workflow_dispatch:       # Ручной запуск из вкладки Actions
+
+# Убирает предупреждение о Node.js 20 и принудительно использует Node.js 24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: pip install  requests
+
+      - name: 🔄 Generate posts from RSS
+        run: python generate_posts.py
+        env:
+          # ⚠️ ЗАМЕНИТЕ НА ВАШ RSS-ФИД:
+          RSS_URL: "https://www.totgoose.ru/rss-feed-917970506263.xml"
+
+      - name: 💾 Commit & Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Добавляем посты (если папка не пустая)
+          if [ -d "_posts" ] && [ "$(ls -A _posts 2>/dev/null)" ]; then
+            git add _posts/
+          fi
+          
+          # Добавляем картинки (если папка не пустая)
+          if [ -d "assets/images/posts" ] && [ "$(ls -A assets/images/posts 2>/dev/null)" ]; then
+            git add assets/images/posts/
+          fi
+          
+          # Добавляем файл истории (только если он существует!)
+          if [ -f ".rss_processed.txt" ]; then
+            git add .rss_processed.txt
+          fi
+          
+          # Коммитим только если есть изменения
+          if ! git diff --staged --quiet; then
+            git commit -m "📝 Auto: новые посты из RSS [skip ci]"
+            git push
+          else
+            echo "✅ Нет изменений для коммита"
+          fi
