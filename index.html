@@ -1,0 +1,75 @@
+---
+layout: default
+title: "Новости Тот ещё Гусь"
+---
+
+<div class="home">
+ 
+
+  {% if site.posts.size == 0 %}
+    <p style="color: #666; font-style: italic;">
+      ⚠️ Постов пока нет. Проверьте, что файлы есть в папке _posts/
+    </p>
+  {% endif %}
+
+  <div class="posts-list">
+    {% for post in site.posts %}
+      <article class="post-preview" style="
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+      ">
+        
+        <h2 style="margin: 0 0 0.5rem;">
+          <a href="{{ post.url | relative_url }}" style="
+            text-decoration: none;
+            color: #2c3e50;
+          ">
+            {{ post.title }}
+          </a>
+        </h2>
+
+        <time style="
+          color: #666;
+          font-size: 0.9rem;
+          display: block;
+          margin-bottom: 1rem;
+        ">
+          {{ post.date | date: "%d.%m.%Y %H:%M" }}
+        </time>
+
+        {% if post.image %}
+          <div style="margin: 1rem 0;">
+            <img src="{{ post.image | relative_url }}" 
+                 alt="{{ post.title }}" 
+                 style="
+                   max-width: 100%;
+                   height: auto;
+                   border-radius: 8px;
+                   max-height: 400px;
+                   object-fit: cover;
+                 ">
+          </div>
+        {% endif %}
+
+        <div class="post-excerpt" style="
+          line-height: 1.6;
+          color: #444;
+        ">
+          {{ post.excerpt | strip_html | truncatewords: 40 }}
+        </div>
+
+        <p style="margin-top: 1rem;">
+          <a href="{{ post.url | relative_url }}" style="
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+          ">
+            Читать далее →
+          </a>
+        </p>
+
+      </article>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,32 @@
+title: "Блог Тот Ещё Гусь"
+description: "Гастрокафе | Валовая 26"
+baseurl: ""                    # Оставьте пустым для username.github.io
+url: "https://news.totgoose.ru"  # Замените на ваш реальный адрес
+language: ru
+timezone: Europe/Moscow
+
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      layout: post
+      comments: false
+
+# Исключаем служебные файлы из сборки
+exclude:
+  - .git
+  - .github
+  - .rss_processed.txt
+  - generate_posts.py
+  - vendor/
+  - Gemfile*
+  - node_modules/
+  - README.md
