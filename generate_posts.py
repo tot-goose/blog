@@ -9,7 +9,7 @@ from email.utils import parsedate_to_datetime
 RSS_URL = os.environ.get("RSS_URL")
 POSTS_DIR = "_posts"
 IMAGES_DIR = "assets/images/posts"
-MAX_ITEMS = 200
+MAX_ITEMS = 700
 PROCESSED_FILE = ".rss_processed.txt"
 
 # 🌐 Заголовки, чтобы сервер не блокировал запрос
