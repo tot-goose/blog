@@ -1,0 +1,29 @@
+---
+layout: default
+---
+<article>
+  <header style="margin-bottom: 2rem;">
+    <h1 style="margin: 0 0 0.5rem;">{{ page.title }}</h1>
+    <time style="color: #8b0000; font-size: 0.9rem;">
+      {{ page.date | date: "%d.%m.%Y %H:%M" }}
+    </time>
+  </header>
+
+  {% if page.image %}
+    <img src="{{ site.baseurl }}{{ page.image }}" 
+         alt="{{ page.title }}" 
+         style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin: 1rem 0;">
+  {% endif %}
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  {% if page.source %}
+    <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee;">
+      <a href="{{ page.source }}" target="_blank" rel="noopener noreferrer">🔗 Перейти к оригиналу</a>
+   </br>
+      <a href="/blog" target="_blank" rel="noopener noreferrer">🍷 Перейти в блог</a>
+    </p>
+  {% endif %}
+</article>
