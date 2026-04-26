@@ -1,8 +1,6 @@
 name: Sync RSS & Generate Posts
 
 on:
-  schedule:
-   # - cron: '0 */6 * * *'  # Запуск каждые 6 часов
   workflow_dispatch:       # Ручной запуск из вкладки Actions
 
 # Убирает предупреждение о Node.js 20 и принудительно использует Node.js 24
